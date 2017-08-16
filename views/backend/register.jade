@@ -1,0 +1,70 @@
+extends ../layouts
+block title
+    | ساخت حساب کاربری
+
+block content
+    .row
+        .col-md-4.col-md-offset-4
+            h3.text-center ساخت حساب کاربری
+            form.form#frmRegister(action='' method='POST')
+                .form-group
+                    label(for="username") نام کاربری:
+                    input.form-control(type="text" name="username" placeholder="نام کاربری")
+                .form-group
+                    label(for="password1") رمز عبور:
+                    input.form-control(type="password" name="password" placeholder="رمز عبور")
+                .form-group
+                    label(for="password2") تکرار رمز عبور:
+                    input.form-control(type="password" name="password2")
+                .form-group.col-md-4.col-md-offset-4
+                    input.form-control.btn.btn-success(type="submit" value="ذخیره")
+
+    .row
+        .col-md-4.col-md-offset-4
+            span اگر کاربر قدیمی هستم برای ورو به سایت
+            | &nbsp;
+            a(href="/login") اینجا
+            | &nbsp;
+            span کلیک کنید !
+
+block jsHeader
+    script.
+        (function ($) {
+            $('#frmRegister').validate({
+                rules: {
+                    username: {
+                        required: true
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6
+                    },
+                    password2: {
+                        required: true,
+                        equalTo: '[name="password"]'
+                    }
+                },
+                messages: {
+                    username: {
+                        required: 'فیلد نام کاربری الزامیست'
+                    },
+                    password1: {
+                        required: 'فیلد رمز عبور الزامیست',
+                        minlength: 'رمز عبور باید بیشتر از {0} حرف باشد'
+                    },
+                    password2: {
+                        required: 'تکرار رمز عبور الزامیست',
+                        equalTo: "رمز عبور یکسان نمی باشد"
+                    }
+                },
+                highlight: function (element, errorClass) {
+                    $(element).parent().addClass('has-error');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).parent().removeClass('has-error').addClass('has-success');
+                    $(element).siblings('label .error').remove();
+                },
+                errorClass: "inValid",
+                onsubmit: true
+            })
+        }(jQuery));

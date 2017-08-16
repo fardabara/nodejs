@@ -1,0 +1,59 @@
+extends ../layouts
+block title
+    | ورود با سایت
+
+block content
+
+    .row
+        .col-md-4.col-md-offset-4
+            h3.text-center ورود به سایت
+            form.form#frmLogin(action='' method='POST')
+                .form-group
+                    label(for="username") نام کاربری:
+                    input.form-control(type="text" name="username" placeholder="نام کاربری")
+                .form-group
+                    label(for="password1") رمز عبور:
+                    input.form-control(type="password" name="password" placeholder="رمز عبور")
+                .form-group.col-md-4.col-md-offset-4
+                    input.form-control.btn.btn-success(type="submit" value="ورود")
+
+    .row
+        .col-md-4.col-md-offset-4
+            span اگر کاربر جدید هستید برای ساخت حساب کاربری
+            | &nbsp;
+            a(href="/register") اینجا
+            | &nbsp;
+            span کلیک کنید !
+block jsHeader
+    script.
+        (function ($) {
+            $('#frmLogin').validate({
+                rules: {
+                    username: {
+                        required: true
+                    },
+                    password: {
+                        required: true,
+                    }
+
+                },
+                messages: {
+                    username: {
+                        required: 'فیلد نام کاربری الزامیست'
+                    },
+                    password: {
+                        required: 'فیلد رمز عبور الزامیست'
+                    }
+                },
+                highlight: function (element, errorClass) {
+                    $(element).parent().addClass('has-error');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).parent().removeClass('has-error').addClass('has-success');
+                    $(element).siblings('label .error').remove();
+                },
+                errorClass: "inValid"
+
+
+            })
+        }(jQuery));
